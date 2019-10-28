@@ -41,6 +41,7 @@ if (isset($_POST)) {
         header('Content-Type: application/zip');
         header('Content-Length: ' . filesize($zipPath));
         header('Content-Disposition: attachment; filename=myPage.zip');
+        header("Access-Control-Allow-Origin: *");
 
         readfile($zipPath);
     } else {
