@@ -12,8 +12,8 @@ function rmdir_rec($dir)
     return rmdir($dir);
 }
 
-if (isset($_POST['html'])) {
-    $html = $_POST['html'];
+if (isset($_POST)) {
+    $html = json_decode(file_get_contents("php://input"),true)["html"];
     $dir = uniqid();
     mkdir($dir);
     mkdir($dir . "/img");
@@ -50,5 +50,5 @@ if (isset($_POST['html'])) {
     //rmdir_rec($dir);
     echo $html;
 } else {
-    echo "Not Available POST Data\n";
+    echo "No Available POST Data\n";
 }
