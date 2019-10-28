@@ -19,7 +19,8 @@ if (isset($_POST['html'])) {
     mkdir($dir . "/img");
 
     $zip = new ZipArchive;
-    if ($zip->open('archive.zip', ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) === true) {
+    $zipPath = $dir.'/myPage.zip';
+    if ($zip->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) === true) {
 
         $zip->addEmptyDir('img');
 
@@ -27,14 +28,21 @@ if (isset($_POST['html'])) {
             preg_match('/\/([^\/]+)\?/', urldecode($match[1]), $fileTitle);
             $content = file_get_contents($match[1]);
             $filename = $fileTitle[1] . ".png";
-            $newPath = $dir ."/". $filename;
+            $newPath = $dir . "/" . $filename;
             file_put_contents($newPath, $content);
-            $zip->addFile($newPath,"img/".$filename);
+            $zip->addFile($newPath, "img/" . $filename);
             return 'img src="img/' . $filename . '"';
         }, $html);
 
-        $zip->addFromString("index.html",$html);
+        $zip->addFromString("index.html", $html);
         $zip->close();
+
+        // HTTPヘッダを設定
+        header('Content-Type: application/zip');
+        header('Content-Length: ' . filesize($zipPath));
+        header('Content-Disposition: attachment; filename=myPage.zip');
+
+        readfile($zipPath);
     } else {
         echo '失敗しました';
     }
