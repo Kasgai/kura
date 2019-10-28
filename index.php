@@ -19,7 +19,7 @@ if (isset($_POST['html'])) {
     mkdir($dir . "/img");
 
     $zip = new ZipArchive;
-    if ($zip->open('archive.zip') === true) {
+    if ($zip->open('archive.zip', ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) === true) {
 
         $zip->addEmptyDir('img');
 
