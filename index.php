@@ -12,8 +12,6 @@ function rmdir_rec($dir)
     return rmdir($dir);
 }
 
-phpinfo();
-
 if (isset($_POST['html'])) {
     $html = $_POST['html'];
     $dir = uniqid();
