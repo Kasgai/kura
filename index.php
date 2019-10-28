@@ -24,7 +24,7 @@ if (isset($_POST)) {
 
         $zip->addEmptyDir('img');
 
-        $html = preg_replace_callback('/img\s+src="(.+)"/', function ($match) use ($dir, $zip) {
+        $html = preg_replace_callback('/img\s+src="([^"]+)"/', function ($match) use ($dir, $zip) {
             preg_match('/\/([^\/]+)\?/', urldecode($match[1]), $fileTitle);
             $content = file_get_contents($match[1]);
             $filename = $fileTitle[1] . ".png";
